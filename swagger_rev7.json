@@ -1,0 +1,2338 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Documentation of J.A.R.V.I.S",
+    "version": "1.0.0",
+    "title": "J.A.R.V.I.S",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "apiteam-t-esp-800@epitech.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "t_esp_800.epitech.com",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "rooms",
+      "description": "Rooms related routes"
+    },
+    {
+      "name": "devices",
+      "description": "Devices related routes"
+    },
+    {
+      "name": "sensors",
+      "description": "Sensors related routes"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/rooms": {
+      "get": {
+        "tags": [
+          "rooms"
+        ],
+        "summary": "Get All Rooms",
+        "description": "Get All Rooms",
+        "operationId": "getAllRooms",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "All Rooms",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "room": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/room"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No Rooms"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "read:rooms"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "rooms"
+        ],
+        "summary": "Create A Room",
+        "description": "Create A Room",
+        "operationId": "createRoom",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "room",
+            "description": "data of the room",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "test"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Room Created",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "room": {
+                  "$ref": "#/definitions/room"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Parameters"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "write:rooms"
+            ]
+          }
+        ]
+      }
+    },
+    "/rooms/{id}": {
+      "get": {
+        "tags": [
+          "rooms"
+        ],
+        "summary": "Get A Room",
+        "description": "Get A Room",
+        "operationId": "getOneRoom",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "id of the room",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Room data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "room": {
+                  "$ref": "#/definitions/room"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "read:rooms"
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "rooms"
+        ],
+        "summary": "Modify A Room",
+        "description": "Modify A Room",
+        "operationId": "modifyOneRoom",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "id of the room",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "in": "body",
+            "name": "room",
+            "description": "new data for the room",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "test"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Room modified",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "room": {
+                  "$ref": "#/definitions/room"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "write:rooms"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "rooms"
+        ],
+        "summary": "Delete A Room",
+        "description": "Delete A Room",
+        "operationId": "deleteOneRoom",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "id of the room",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Room deleted",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "room": {
+                  "$ref": "#/definitions/room"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "write:rooms"
+            ]
+          }
+        ]
+      }
+    },
+    "/rooms/{id}/devices": {
+      "get": {
+        "tags": [
+          "rooms"
+        ],
+        "summary": "Get All Devices For A Room",
+        "description": "Get All Devices For A Room",
+        "operationId": "getAllDevicesForRoom",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "id of the room",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Devices data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "device": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/device"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "read:rooms",
+              "read:devices"
+            ]
+          }
+        ]
+      }
+    },
+    "/rooms/{id}/sensors": {
+      "get": {
+        "tags": [
+          "rooms"
+        ],
+        "summary": "Get All Sensors For A Room",
+        "description": "Get All Sensors For A Room",
+        "operationId": "getAllSensorsForRoom",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "id of the room",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sensors data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "sensor": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/sensor"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "read:rooms",
+              "read:sensors"
+            ]
+          }
+        ]
+      }
+    },
+    "/rooms/{room_id}/link/device/{device_id}": {
+      "patch": {
+        "tags": [
+          "rooms"
+        ],
+        "summary": "Link A Device To A Room",
+        "description": "Link A Device To A Room",
+        "operationId": "linkDeviceToRoom",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "room_id",
+            "description": "id of room",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "in": "path",
+            "name": "device_id",
+            "description": "id of device",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Device linked",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "write:rooms"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "rooms"
+        ],
+        "summary": "Unlink A Device To A Room",
+        "description": "Unlink A Device To A Room",
+        "operationId": "unlinkDeviceToRoom",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "room_id",
+            "description": "id of room",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "in": "path",
+            "name": "device_id",
+            "description": "id of device",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Device unlinked",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "write:rooms"
+            ]
+          }
+        ]
+      }
+    },
+    "/rooms/{room_id}/link/sensor/{sensor_id}": {
+      "patch": {
+        "tags": [
+          "rooms"
+        ],
+        "summary": "Link A Sensor To A Room",
+        "description": "Link A Sensor To A Room",
+        "operationId": "linkSensorToRoom",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "room_id",
+            "description": "id of room",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "in": "path",
+            "name": "sensor_id",
+            "description": "id of sensor",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sensor linked",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "write:rooms"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "rooms"
+        ],
+        "summary": "Unlink A Sensor To A Room",
+        "description": "Unlink A Sensor To A Room",
+        "operationId": "unlinkSensorToRoom",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "room_id",
+            "description": "id of room",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "in": "path",
+            "name": "sensor_id",
+            "description": "id of sensor",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sensor unlinked",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "write:rooms"
+            ]
+          }
+        ]
+      }
+    },
+    "/devices": {
+      "get": {
+        "tags": [
+          "devices"
+        ],
+        "summary": "Get All Devices",
+        "description": "Get All Devices",
+        "operationId": "getAllDevices",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Devices data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "sensor": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/device"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "read:devices"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "devices"
+        ],
+        "summary": "Create A Device",
+        "description": "Create A Device",
+        "operationId": "createDevice",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "device",
+            "description": "data of new device",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/device"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Device data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "sensor": {
+                  "$ref": "#/definitions/device"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "write:devices"
+            ]
+          }
+        ]
+      }
+    },
+    "/devices/{id}": {
+      "get": {
+        "tags": [
+          "devices"
+        ],
+        "summary": "Get A Device",
+        "description": "Get A Device",
+        "operationId": "getOneDevice",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "id of device",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Device data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "sensor": {
+                  "$ref": "#/definitions/device"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "read:devices"
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "devices"
+        ],
+        "summary": "Update A Device",
+        "description": "Update A Device",
+        "operationId": "updateOneDevice",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "id of device",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "in": "body",
+            "name": "device",
+            "description": "data of device",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/device"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Device data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "sensor": {
+                  "$ref": "#/definitions/device"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "write:devices"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "devices"
+        ],
+        "summary": "Delete A Device",
+        "description": "Delete A Device",
+        "operationId": "deleteOneDevice",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "id of device",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Device data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "sensor": {
+                  "$ref": "#/definitions/device"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "write:devices"
+            ]
+          }
+        ]
+      }
+    },
+    "/deviceCategory": {
+      "get": {
+        "tags": [
+          "devices"
+        ],
+        "summary": "Get All Device Categories",
+        "description": "Get All Device Categories",
+        "operationId": "getAllDeviceCategories",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Device Categories data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "sensor": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/deviceCategory"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "read:devices"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "devices"
+        ],
+        "summary": "Create A Device Category",
+        "description": "Create A Device Category",
+        "operationId": "createDeviceCategory",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "device_category",
+            "description": "data of new device_category",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/deviceCategory"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Device Category data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "sensor": {
+                  "$ref": "#/definitions/deviceCategory"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "write:devices"
+            ]
+          }
+        ]
+      }
+    },
+    "/deviceCategory/{device_category_id}": {
+      "get": {
+        "tags": [
+          "devices"
+        ],
+        "summary": "Get A Device Category",
+        "description": "Get A Device Category",
+        "operationId": "getOneDeviceCategory",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "device_category_id",
+            "description": "id of device category",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Device Category data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "sensor": {
+                  "$ref": "#/definitions/deviceCategory"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "read:devices"
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "devices"
+        ],
+        "summary": "Update A Device Category",
+        "description": "Update A Device Category",
+        "operationId": "updateOneDeviceCategory",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "device_category_id",
+            "description": "id of device category",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "in": "body",
+            "name": "device_category",
+            "description": "data of device category",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/deviceCategory"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Device Category data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "sensor": {
+                  "$ref": "#/definitions/deviceCategory"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "write:devices"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "devices"
+        ],
+        "summary": "Delete A Device Category",
+        "description": "Delete A Device Category",
+        "operationId": "deleteOneDeviceCategory",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "device_category_id",
+            "description": "id of device category",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Device Category data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "sensor": {
+                  "$ref": "#/definitions/deviceCategory"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "write:devices"
+            ]
+          }
+        ]
+      }
+    },
+    "/sensors": {
+      "get": {
+        "tags": [
+          "sensors"
+        ],
+        "summary": "Get All Sensors",
+        "description": "Get All Sensors",
+        "operationId": "getAllSensors",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Sensors data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "sensor": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/sensor"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "read:sensors"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "sensors"
+        ],
+        "summary": "Create A Sensor",
+        "description": "Create A Sensor",
+        "operationId": "createSensor",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "sensor",
+            "description": "data of new sensor",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/sensor"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sensor data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "sensor": {
+                  "$ref": "#/definitions/sensor"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "write:sensors"
+            ]
+          }
+        ]
+      }
+    },
+    "/sensors/{id}": {
+      "get": {
+        "tags": [
+          "sensors"
+        ],
+        "summary": "Get A Sensor",
+        "description": "Get A Sensor",
+        "operationId": "getOneSensor",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "id of sensor",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sensor data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "sensor": {
+                  "$ref": "#/definitions/sensor"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "read:sensors"
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "sensors"
+        ],
+        "summary": "Update A Sensor",
+        "description": "Update A Sensor",
+        "operationId": "updateOneSensor",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "id of sensor",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "in": "body",
+            "name": "sensor",
+            "description": "data of sensor",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/sensor"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sensor data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "sensor": {
+                  "$ref": "#/definitions/sensor"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "write:sensors"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "sensors"
+        ],
+        "summary": "Delete A Sensor",
+        "description": "Delete A Sensor",
+        "operationId": "deleteOneSensor",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "id of sensor",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sensor data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "sensor": {
+                  "$ref": "#/definitions/sensor"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "write:sensors"
+            ]
+          }
+        ]
+      }
+    },
+    "/sensorCategory": {
+      "get": {
+        "tags": [
+          "sensors"
+        ],
+        "summary": "Get All Sensor Categories",
+        "description": "Get All Sensor Categories",
+        "operationId": "getAllSensorCategories",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Sensor Categories data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "sensor": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/sensorCategory"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "read:sensors"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "sensors"
+        ],
+        "summary": "Create A Sensor Category",
+        "description": "Create A Sensor Category",
+        "operationId": "createSensorCategory",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "sensor_category",
+            "description": "data of new sensor_category",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/sensorCategory"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sensor Category data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "sensor": {
+                  "$ref": "#/definitions/sensorCategory"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "write:sensors"
+            ]
+          }
+        ]
+      }
+    },
+    "/sensorCategory/{sensor_category_id}": {
+      "get": {
+        "tags": [
+          "sensors"
+        ],
+        "summary": "Get A Sensor Category",
+        "description": "Get A Sensor Category",
+        "operationId": "getOneSensorCategory",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "sensor_category_id",
+            "description": "id of sensor category",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sensor Category data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "sensor": {
+                  "$ref": "#/definitions/sensorCategory"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "read:devices"
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "sensors"
+        ],
+        "summary": "Update A Sensor Category",
+        "description": "Update A Sensor Category",
+        "operationId": "updateOneSensorCategory",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "sensor_category_id",
+            "description": "id of sensor category",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "in": "body",
+            "name": "sensor_category",
+            "description": "data of sensor category",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/sensorCategory"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sensor Category data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "sensor": {
+                  "$ref": "#/definitions/sensorCategory"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "write:sensors"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "sensors"
+        ],
+        "summary": "Delete A Sensor Category",
+        "description": "Delete A Sensor Category",
+        "operationId": "deleteOneSensorCategory",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "sensor_category_id",
+            "description": "id of sensor category",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sensor Category data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "sensor": {
+                  "$ref": "#/definitions/sensorCategory"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "write:sensors"
+            ]
+          }
+        ]
+      }
+    },
+    "/sensorData": {
+      "get": {
+        "tags": [
+          "sensors"
+        ],
+        "summary": "Get All Sensor Datas",
+        "description": "Get All Sensor Datas",
+        "operationId": "getAllSensorDatas",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Sensor Datas data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "sensor": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/sensorData"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "read:sensors"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "sensors"
+        ],
+        "summary": "Create A Sensor Data",
+        "description": "Create A Sensor Data",
+        "operationId": "createSensorData",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "sensor_data",
+            "description": "data of new sensor_data",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/sensorData"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sensor Data data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "sensor": {
+                  "$ref": "#/definitions/sensorData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "write:sensors"
+            ]
+          }
+        ]
+      }
+    },
+    "/sensorData/{sensor_data_id}": {
+      "get": {
+        "tags": [
+          "sensors"
+        ],
+        "summary": "Get A Sensor Data",
+        "description": "Get A Sensor Data",
+        "operationId": "getOneSensorData",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "sensor_data_id",
+            "description": "id of sensor data",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sensor Data data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "sensor": {
+                  "$ref": "#/definitions/sensorData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "read:sensors"
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "sensors"
+        ],
+        "summary": "Update A Sensor Data",
+        "description": "Update A Sensor Data",
+        "operationId": "updateOneSensorData",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "sensor_data_id",
+            "description": "id of sensor data",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "in": "body",
+            "name": "sensor_data",
+            "description": "data of sensor data",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/sensorData"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sensor Data data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "sensor": {
+                  "$ref": "#/definitions/sensorData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "write:sensors"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "sensors"
+        ],
+        "summary": "Delete A Sensor Data",
+        "description": "Delete A Sensor Data",
+        "operationId": "deleteOneSensorData",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "sensor_data_id",
+            "description": "id of sensor data",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sensor Data data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "sensor": {
+                  "$ref": "#/definitions/sensorData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "write:sensors"
+            ]
+          }
+        ]
+      }
+    },
+    "/sensorDataType": {
+      "get": {
+        "tags": [
+          "sensors"
+        ],
+        "summary": "Get All Sensor Data Types",
+        "description": "Get All Sensor Data Types",
+        "operationId": "getAllSensorDataTypes",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Sensor Data Types data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "sensor": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/sensorDataType"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "read:sensors"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "sensors"
+        ],
+        "summary": "Create A Sensor Data Type",
+        "description": "Create A Sensor Data Type",
+        "operationId": "createSensorDataType",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "sensor_data_type",
+            "description": "data of new sensor_data_type",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/sensorDataType"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sensor Data Type data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "sensor": {
+                  "$ref": "#/definitions/sensorDataType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "write:sensors"
+            ]
+          }
+        ]
+      }
+    },
+    "/sensorDataType/{sensor_data_type_id}": {
+      "get": {
+        "tags": [
+          "sensors"
+        ],
+        "summary": "Get A Sensor Data Type",
+        "description": "Get A Sensor Data Type",
+        "operationId": "getOneSensorDataType",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "sensor_data_type_id",
+            "description": "id of sensor data type",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sensor Data Type data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "sensor": {
+                  "$ref": "#/definitions/sensorDataType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "read:sensors"
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "sensors"
+        ],
+        "summary": "Update A Sensor Data Type",
+        "description": "Update A Sensor Data Type",
+        "operationId": "updateOneSensorDataType",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "sensor_data_type_id",
+            "description": "id of sensor data type",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "in": "body",
+            "name": "sensor_data_type",
+            "description": "data of sensor data type",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/sensorDataType"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sensor Data Type data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "sensor": {
+                  "$ref": "#/definitions/sensorDataType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "write:sensors"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "sensors"
+        ],
+        "summary": "Delete A Sensor Data Type",
+        "description": "Delete A Sensor Data Type",
+        "operationId": "deleteOneSensorDataType",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "sensor_data_type_id",
+            "description": "id of sensor data type",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sensor Data Type data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "sensor": {
+                  "$ref": "#/definitions/sensorDataType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          }
+        },
+        "security": [
+          {
+            "jarvis_auth": [
+              "write:sensors"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "securityDefinitions": {
+    "jarvis_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "http://t_esp_800.epitech.com/oauth/dialog",
+      "flow": "implicit",
+      "scopes": {
+        "write:rooms": "modify rooms",
+        "read:rooms": "read rooms",
+        "write:devices": "modify devices",
+        "read:devices": "read devices",
+        "write:sensors": "modify sensors",
+        "read:sensors": "read sensors"
+      }
+    }
+  },
+  "definitions": {
+    "room": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "example": 1
+        },
+        "name": {
+          "type": "string",
+          "example": "test"
+        }
+      }
+    },
+    "device": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "example": 1
+        },
+        "name": {
+          "type": "string",
+          "example": "test"
+        },
+        "details": {
+          "type": "string",
+          "example": "test"
+        },
+        "ip": {
+          "type": "string",
+          "example": "0.0.0.0"
+        },
+        "version": {
+          "type": "string",
+          "example": "1"
+        },
+        "categoryId": {
+          "type": "number",
+          "example": 1
+        },
+        "roomId": {
+          "type": "number",
+          "example": 1
+        }
+      }
+    },
+    "sensor": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "example": 1
+        },
+        "name": {
+          "type": "string",
+          "example": "test"
+        },
+        "ip": {
+          "type": "string",
+          "example": "0.0.0.0"
+        },
+        "version": {
+          "type": "string",
+          "example": "1"
+        },
+        "category_id": {
+          "type": "number",
+          "example": 1
+        },
+        "roomId": {
+          "type": "number",
+          "example": 1
+        },
+        "dataId": {
+          "type": "number",
+          "example": 1
+        },
+        "dataTypeId": {
+          "type": "number",
+          "example": 1
+        }
+      }
+    },
+    "deviceCategory": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "example": 1
+        },
+        "name": {
+          "type": "string",
+          "example": "ampoule"
+        }
+      }
+    },
+    "sensorCategory": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "example": 1
+        },
+        "name": {
+          "type": "string",
+          "example": "motion_sensor"
+        }
+      }
+    },
+    "sensorData": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "example": 1
+        },
+        "name": {
+          "type": "string",
+          "example": "data"
+        },
+        "value": {
+          "type": "number",
+          "example": 12.5
+        },
+        "timestamp": {
+          "type": "string",
+          "example": "12/05/2025_15:11:05"
+        },
+        "longitude": {
+          "type": "number",
+          "example": 511.512
+        },
+        "latitude": {
+          "type": "number",
+          "example": 852.544
+        },
+        "description": {
+          "type": "string",
+          "example": "data"
+        }
+      }
+    },
+    "sensorDataType": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "example": 1
+        },
+        "name": {
+          "type": "string",
+          "example": "data"
+        }
+      }
+    },
+    "scenario": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "example": 1
+        },
+        "file_name": {
+          "type": "string",
+          "example": "scenario_1.scn"
+        }
+      }
+    }
+  }
+}
