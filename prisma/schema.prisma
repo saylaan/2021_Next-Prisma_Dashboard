@@ -1,0 +1,90 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Room {
+  id         Int @id @default(autoincrement())
+  name       String
+  devices    Device[]
+  sensors    Sensor[]
+}
+
+model Device {
+  id               Int @id @default(autoincrement())
+  name             String 
+  details          String
+  ip               String
+  version          String
+  deviceCategory   DeviceCategory? @relation(fields: [deviceCategoryId], references: [id])
+  deviceCategoryId Int?
+  room             Room? @relation(fields: [roomId], references: [id])
+  roomId           Int?
+}
+
+model DeviceCategory {
+  id      Int @id @default(autoincrement())
+  name    String
+  devices Device[]
+
+  @@unique([name])
+}
+
+model Config {
+  id                Int @id @default(autoincrement())
+  start_at          DateTime
+  end_at            DateTime
+  trigger_condition String
+}
+
+model Sensor {
+  id               Int @id @default(autoincrement())
+  name             String 
+  ip               String
+  version          String
+  room             Room? @relation(fields: [roomId], references: [id])
+  roomId           Int?
+  sensorCategory   SensorCategory? @relation(fields: [sensorCategoryId], references: [id])
+  sensorCategoryId Int?
+  sensorData       SensorData? @relation(fields: [sensorDataId], references: [id])
+  sensorDataId     Int?
+  sensorDataType   SensorDataType? @relation(fields: [sensorDataTypeId], references: [id])
+  sensorDataTypeId Int?
+}
+
+model SensorCategory {
+  id      Int @id @default(autoincrement())
+  name    String
+  sensors Sensor[]
+
+  @@unique([name])
+}
+
+model SensorData {
+  id          Int @id @default(autoincrement())
+  name        String 
+  value       Float
+  timestamp   DateTime
+  longitude   Float
+  latitude    Float
+  description String
+  sensors Sensor[]
+}
+
+model SensorDataType {
+  id      Int @id @default(autoincrement())
+  name    String
+  sensors Sensor[]
+}
+
+model Scenario {
+  id        Int @id @default(autoincrement())
+  file_name String
+}
